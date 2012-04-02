@@ -26,10 +26,6 @@ var BF = function (bf,_input){
 	var openBrackets;
 	var closeBrackets;
 
-	this.randomFromTo = function(from, to){
-		return Math.floor(Math.random() * (to - from + 1) + from);
-	};
-
 	this.check = function() {
 		this.openBrackets = [];
 		this.closeBrackets = [];
@@ -68,23 +64,37 @@ var BF = function (bf,_input){
 			}
 			var __input = [];
 			for (var i = 0; i < this.input.length; i++) {
-				__input.push(String.fromCharCode(this.charAt(i)));
+				__input.push(String.fromCharCode(this.input.charAt(i)));
 			}
 			__input.reverse();
 
 			for (var i = 0; i < this.opcode.length; i++) {
 				if (commands[this.opcode.charAt(i)]) {
 					javascriptCode += commands[this.opcode.charAt(i)];
-				} else {
-					if (console.log) console.log(this.opcode.charAt(i));
 				}
 			}
 			eval(javascriptCode);
 			for(var i = 0; i < output.length; i++){
 				this.output += String.fromCharCode(output[i]);
 			}
+			this.output = this.stripslashes(this.output);
 			return this.output;
 		}
+		return '';
+	};
+	this.stripslashes = function(str) {
+		return (str + '').replace(/\\(.?)/g, function (s, n1) {
+		    switch (n1) {
+				case '\\':
+				    return '\\';
+				case '0':
+			        return '\u0000';
+				case '':
+				    return '';
+				default:
+				    return n1;
+				}
+		});
 	};
 
 	this.opcode = bf;
@@ -93,26 +103,3 @@ var BF = function (bf,_input){
 	this.openBrackets = [];
 	this.closeBrackets = [];
 };
-function stripslashes(str) {
-return (str + '').replace(/\\(.?)/g, function (s, n1) {
-        switch (n1) {
-		    case '\\':
-		        return '\\';
-		    case '0':
-	            return '\u0000';
-		    case '':
-		        return '';
-		    default:
-		        return n1;
-		    }
-    });
-}
-(function($){
-	$.fn.brainFuck = function() {
-		var $$ = $(this);
-		var brainFuck = new BF($$.html(), ($$.data('input') != undefined) ? $$.data('input') : '');
-		$$.after(stripslashes(brainFuck.run()));
-		return this;
-	}
-	$('script[language="brainfuck"]').brainFuck();
-})(jQuery);

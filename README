@@ -1,20 +1,23 @@
 A simple Brainfuck interpreter plugin for jQuery released under the WTFPL <http://http://sam.zoy.org/wtfpl/>
 
-It makes you able to use such a script : 
+It makes you able to use such a script :
 
 <script language="brainfuck">
   ++++++++++[>+++++++>++++++++++>+++>+<<<<-]>++.>+.+++++++..+++.>++.<<+++++++++++++++.>.+++.------.--------.>+.>.
 </script>
 
-if you need to pass some inputs to the script, just put them into a "data-input" attribute as this : 
+if you need to pass some inputs to the script, just put them into a "data-input" attribute as this :
 
 <script language="brainfuck" data-input="my input goes here">
   your brainfuck script here
 </script>
 
-
 You can, of course, comment your script !
 
-Enjoy
+USAGE
 
+Look at the end of the index.html example file, at the end.
+If your js files are not into a folder called "js", edit the plugin and worker js files and change files path.
+
+Enjoy
 
